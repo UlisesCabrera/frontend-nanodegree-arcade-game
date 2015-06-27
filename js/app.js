@@ -1,9 +1,5 @@
 // Enemies our player must avoid
 var Enemy = function(locX,locY,speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.width = 101;
     this.height = 171;
     this.x = locX;
@@ -12,17 +8,9 @@ var Enemy = function(locX,locY,speed) {
     this.speed = speed;
 }
 
-
-
-
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-   
     this.x+=(this.speed*dt);
         //reset location and speed when the enemy reach the end of the canvas
         if (this.x > 505){
@@ -49,19 +37,29 @@ var Hero = function(locX, locY) {
 };
 
 Hero.prototype.update = function(dt) {
+    
 };
 
 Hero.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Hero.prototype.handleInput = function() {
-    
-    
+Hero.prototype.handleInput = function(allowedKeys) {
+    var move = 50;
+    switch(allowedKeys) {
+        case 'left' :
+            this.x-=move;
+            break;
+        case 'right' :
+            this.x+=move;
+            break;
+        case 'up' :
+            this.y-=move;
+            break;
+        case 'down':
+            this.y+=move;    
+    };
 };
-
-
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
