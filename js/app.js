@@ -12,8 +12,8 @@ var Enemy = function(locX,locY,speed) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x+=(this.speed*dt);
-        //reset location and speed when the enemy reach the end of the canvas
-        if (this.x > 505){
+    //reset location and speed when the enemy reach the end of the canvas
+    if (this.x > 505){
         this.x = 1;
         this.speed = Math.floor((Math.random()*500)+100);
     };
@@ -37,7 +37,7 @@ var Hero = function(locX, locY) {
 };
 
 Hero.prototype.update = function() {
-    
+
 };
 
 Hero.prototype.render = function() {
@@ -48,16 +48,22 @@ Hero.prototype.handleInput = function(allowedKeys) {
     var move = 50;
     switch(allowedKeys) {
         case 'left' :
-            this.x-=move;
+            if (player.x > 1 ){
+                this.x-=move;
+            };
             break;
         case 'right' :
-            this.x+=move;
+            if (player.x < 400) {
+                this.x+=move;
+            };
             break;
         case 'up' :
             this.y-=move;
             break;
         case 'down':
-            this.y+=move;    
+            if (player.y < 400) {
+                this.y+=move;
+            };
     };
 };
 // Now instantiate your objects.
@@ -73,8 +79,8 @@ var player = new Hero(200,400);
 
 //create collision detection function
 var checkCollisions = function(){
-            console.log(player.x);
-            console.log(enemy1.x);
+    console.log(player.x);
+    console.log(enemy1.x);
 }
 
 //reset the game if the player reach the water
