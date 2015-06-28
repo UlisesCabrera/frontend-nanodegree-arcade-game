@@ -79,14 +79,21 @@ var player = new Hero(200,400);
 
 //create collision detection function
 var checkCollisions = function(){
-    console.log(player.x);
-    console.log(enemy1.x);
+   // console.log(player.x);
+   // console.log(enemy1.x);
 }
 
-//reset the game if the player reach the water
+// Add score board to the game
+var scoreBoard = document.getElementById('score');
+var score = 0;
+scoreBoard.innerHTML = score;
+
+//reset the position and add score when it reaches the water
 var endRound = function(){
     if (player.y < 50) {
         player.y = 400;
+        score++;
+        scoreBoard.innerHTML = score;
     };
 }
 
