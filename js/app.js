@@ -36,14 +36,14 @@ var Hero = function(locX, locY) {
     this.sprite = 'images/char-boy.png';
 };
 
-Hero.prototype.update = function(dt) {
+Hero.prototype.update = function() {
     
 };
 
 Hero.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
+//Player movement
 Hero.prototype.handleInput = function(allowedKeys) {
     var move = 50;
     switch(allowedKeys) {
@@ -68,10 +68,23 @@ Hero.prototype.handleInput = function(allowedKeys) {
 var enemy1 = new Enemy(10,60,300);
 var enemy2 = new Enemy(10,140,200);
 var enemy3 = new Enemy(10,220,100);
-var allEnemies = [enemy1,enemy2, enemy3
-];
+var allEnemies = [enemy1, enemy2, enemy3];
 var player = new Hero(200,400);
 
+//create collision detection function
+var checkCollisions = function(){
+            console.log(player.x);
+            console.log(enemy1.x);
+}
+
+//reset the game if the player reach the water
+var endRound = function(){
+    if (player.y < 50) {
+        player.y = 400;
+    };
+}
+
+endRound();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
