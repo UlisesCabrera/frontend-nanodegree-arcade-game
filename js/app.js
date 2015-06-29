@@ -1,14 +1,18 @@
-//character image
-var character = 'images/char-boy.png';
+"use strict";
+//set initial characters
+var characters = ['images/char-boy.png', 'images/char-cat-girl.png','images/char-horn-girl.png', 'images/char-pink-girl.png', 'images/char-princess-girl.png'];
+var char = 0;
+var listOfCharacter = document.getElementsByTagName('ul')[0];
 
 // Enemies our player must avoid
 var Enemy = function(locX,locY,speed) {
-    this.width = 100;
+    this.width = 80;
     this.height = 50;
     this.x = locX;
     this.y = locY;
     this.sprite = 'images/enemy-bug.png';
     this.speed = speed;
+
 }
 //Set of posible Y position
 var locationsY = [60,140,220,60,140,220,60,140,220,140,220,60]; 
@@ -36,15 +40,14 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 var Hero = function(locX, locY) {
-    this.width = 100;
+    this.width = 50;
     this.height = 50;
     this.y = locY;
     this.x = locX;
-    this.sprite = character;
+    this.sprite = characters[char];
 };
 
 Hero.prototype.update = function() {
-
 };
 
 Hero.prototype.render = function() {
@@ -78,6 +81,31 @@ Hero.prototype.handleInput = function(keys) {
                 this.y+=move;
             };
     };
+};
+// change character function
+Hero.prototype.updateCharacter = function(selection) {
+        switch (selection) {
+            case '0':
+                char = 0;
+                this.sprite = characters[char];
+                break;
+            case '1':
+                char = 1;
+                this.sprite = characters[char];
+                break;
+            case '2':
+                char = 2;
+                this.sprite = characters[char];
+                break;
+            case '3' :
+                char = 3;
+                this.sprite = characters[char];
+                break;
+            case '4' :
+                char = 4;
+                this.sprite = characters[char];
+                break;
+        };               
 };
 
 // Now instantiate your objects.
@@ -135,6 +163,15 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
+});
+
+//stops arrows key to move the browser window
+document.addEventListener('keydown', function(e){
+    e.preventDefault();
+})
+
+//Add event listener to list of character and pass argument to the updateCharacter function
+listOfCharacter.addEventListener('click', function(e){
+    player.updateCharacter(e.target.id);                             
 });
