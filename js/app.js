@@ -1,3 +1,6 @@
+//character image
+var character = 'images/char-boy.png';
+
 // Enemies our player must avoid
 var Enemy = function(locX,locY,speed) {
     this.width = 100;
@@ -27,12 +30,13 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+
 var Hero = function(locX, locY) {
     this.width = 100;
     this.height = 50;
     this.y = locY;
     this.x = locX;
-    this.sprite = 'images/char-boy.png';
+    this.sprite = character;
 };
 
 Hero.prototype.update = function() {
@@ -44,28 +48,34 @@ Hero.prototype.render = function() {
 };
 
 //Player movement
-Hero.prototype.handleInput = function(allowedKeys) {
+Hero.prototype.handleInput = function(keys) {
     var move = 50;
-    switch(allowedKeys) {
+    switch(keys) {
         case 'left' :
-            if (player.x > 1 ){
+            if (this.x > 1 ){
                 this.x-=move;
             };
             break;
         case 'right' :
-            if (player.x < 400) {
+            if (this.x < 400) {
                 this.x+=move;
             };
             break;
         case 'up' :
-            this.y-=move;
+            if (this.y < 55) {
+                this.y = 400;
+                updateScore(); 
+            } else {
+                this.y-=move;
+            }
             break;
         case 'down':
-            if (player.y < 400) {
+            if (this.y < 400) {
                 this.y+=move;
             };
     };
 };
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -77,21 +87,24 @@ var enemy3 = new Enemy(10,220,100);
 var allEnemies = [enemy1, enemy2, enemy3];
 var player = new Hero(200,400);
 
-
-// Add score board to the game
+//Set score board
 var scoreBoard = document.getElementById('score');
-var score = 0;
+var score = 0
 scoreBoard.innerHTML = ' ' + score;
 
-//reset the position and add score when it reaches the water
-var endRound = function(){
-    if (player.y < 50) {
-        player.y = 400;
-        score++;
-        scoreBoard.innerHTML = ' ' + score;
-    };
-}
+//function to reset the score
+var resetScore = function() {
+    score = 0;
+    scoreBoard.innerHTML = ' ' + score;
+};
 
+//function to update the score
+var updateScore = function(){        
+    score++;
+    scoreBoard.innerHTML = ' ' + score;
+};
+
+//Axis-Aligned Bounding box collision algorithm - more info at https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#Collision_Performance
 function collision(a, b) {
     return a.x < b.x + b.width &&
         a.x + a.width > b.x &&
@@ -99,19 +112,16 @@ function collision(a, b) {
         a.y + a.height > b.y;
 }
 
-//handle collision, reset player position and score
+//function to handle collision, reset player position and score
 var checkCollisions = function(){
     for (var i = 0; i < allEnemies.length; i++ ){
         if (collision(player,allEnemies[i])) {
             player.x = 200;
             player.y = 400;
-            score = 0;
-            scoreBoard.innerHTML = ' ' + score;
+            resetScore();
         };
     };    
 };
-
-endRound();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
