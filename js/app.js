@@ -10,6 +10,8 @@ var Enemy = function(locX,locY,speed) {
     this.sprite = 'images/enemy-bug.png';
     this.speed = speed;
 }
+//Set of posible Y position
+var locationsY = [60,140,220,60,140,220,60,140,220,140,220,60]; 
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -19,6 +21,8 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505){
         this.x = 1;
         this.speed = Math.floor((Math.random()*150)+100);
+        var randomNumber = Math.floor(Math.random()*10+1);
+        this.y = locationsY[randomNumber]
     };
 }
 
@@ -81,9 +85,9 @@ Hero.prototype.handleInput = function(keys) {
 // Place the player object in a variable called player
 
 //create new enemies intances, set location and starting speeed
-var enemy1 = new Enemy(10,60,300);
-var enemy2 = new Enemy(10,140,200);
-var enemy3 = new Enemy(10,220,100);
+var enemy1 = new Enemy(10,locationsY[0],300);
+var enemy2 = new Enemy(10,locationsY[1],200);
+var enemy3 = new Enemy(10,locationsY[2],100);
 var allEnemies = [enemy1, enemy2, enemy3];
 var player = new Hero(200,400);
 
