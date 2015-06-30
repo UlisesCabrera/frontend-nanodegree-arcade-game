@@ -146,7 +146,8 @@ function collision(a, b) {
 
 //function to handle collision, reset player position and score
 var checkCollisions = function(){
-    for (var i = 0; i < allEnemies.length; i++ ){
+    var length = allEnemies.length;
+    for (var i = 0; i < length; i++ ){
         if (collision(player,allEnemies[i])) {
             player.x = 200;
             player.y = 400;
